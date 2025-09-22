@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import data from "./data/items.json";
 import type { Item, SlotKey, Rarity, StatKey, DataFile } from "./types";
+const dataFile = data as DataFile;
 
 /** Utility */
 function cx(...list: Array<string | false | null | undefined>) {
@@ -70,7 +71,7 @@ export default function Wireframes() {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const hp = 0.55, mp = 0.72, xp = 0.32;
 
-  const equipped: Record<SlotKey, Item | null> = (data as DataFile).equipped as Record<SlotKey, Item | null>;
+  const equipped: Record<SlotKey, Item | null> = dataFile.equipped as Record<SlotKey, Item | null>;
 
   /* inline fallback kept for reference
   const equipped_fallback: Record<SlotKey, Item | null> = {
@@ -85,7 +86,7 @@ export default function Wireframes() {
     Belt: null,
   };
 
-  const inventoryItems: Item[] = (data as DataFile).inventory as Item[];
+  const inventoryItems: Item[] = dataFile.inventory as Item[];
 
   /* inline fallback kept for reference
   const inventoryItems_fallback: Item[] = [
@@ -248,7 +249,7 @@ function Tooltip({ item, cursor, equippedLookup }: { item: Item | null; cursor: 
   if (!item) return null;
   const eq = equippedLookup[item.slot as string];
 
-  const compareKeys = (data as DataFile).compareKeys as StatKey[];
+  const compareKeys = dataFile.compareKeys as StatKey[];
   const delta = (key: typeof compareKeys[number]) => (item.stats?.[key] ?? 0) - (eq?.stats?.[key] ?? 0);
 
   return (
